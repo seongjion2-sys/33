@@ -1,260 +1,354 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인간 키우기</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body {
-            background-color: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인간 키우기</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    body {
+      background-color: #0d1117;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    }
+    .game-container {
+      position: relative;
+      width: 100%;
+      max-width: 850px;
+      height: 560px;
+      background: #fdfbf7;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* 1. 거실 배경 SVG 스타일 영역 */
+    .viewport {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      background: linear-gradient(to bottom, #f7f1e5 0%, #e6ded0 100%);
+      overflow: hidden;
+    }
+    
+    /* 천장 & 천장등 */
+    .ceiling {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 60px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(255, 230, 180, 0.6);
+    }
+    .fan {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 20px;
+      background: #e2dcd2;
+      border-radius: 10px;
+    }
 
-        /* 메인 게임 화면 컨테이너 */
-        .game-screen {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 520px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+    /* 창문 영역 */
+    .window-frame {
+      position: absolute;
+      top: 60px;
+      left: 28%;
+      width: 44%;
+      height: 280px;
+      background: #cbe3f0;
+      border: 8px solid #ffffff;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+      display: flex;
+    }
+    .window-pane {
+      flex: 1;
+      border-right: 3px solid #ffffff;
+    }
+    .window-pane:last-child { border-right: none; }
+    
+    /* 소파 (좌측) */
+    .sofa {
+      position: absolute;
+      left: -20px;
+      bottom: 60px;
+      width: 280px;
+      height: 200px;
+      background: #eae2d6;
+      border-radius: 20px;
+      box-shadow: 5px 5px 15px rgba(0,0,0,0.08);
+    }
+    .sofa-cushion {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 70px;
+      background: #ded5c5;
+      border-radius: 10px;
+    }
 
-        /* 1. 거실 배경 사진 */
-        .bg-layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.ibb.co/L9Hvh3R/bg.jpg') center/cover no-repeat;
-            transition: filter 0.3s ease;
-        }
+    /* TV (우측) */
+    .tv-screen {
+      position: absolute;
+      right: 15px;
+      top: 80px;
+      width: 200px;
+      height: 260px;
+      background: #1a1a24;
+      border: 6px solid #2d2d38;
+      border-radius: 8px;
+      box-shadow: -5px 5px 15px rgba(0,0,0,0.15);
+    }
 
-        /* 2. 누끼 딴 아기 사진 */
-        .baby-layer {
-            position: absolute;
-            bottom: 110px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            z-index: 2;
-            pointer-events: none;
-            transition: transform 0.1s ease;
-        }
+    /* 거실 테이블 */
+    .table {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 60px;
+      background: #2b3a4a;
+      border-radius: 6px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
 
-        /* 업그레이드 클릭 시 배경 및 아기 블러 처리 */
-        .blur-active .bg-layer {
-            filter: blur(8px) brightness(0.8);
-        }
-        .blur-active .baby-layer {
-            filter: blur(8px) brightness(0.8);
-        }
+    /* 아기 캐릭터 클릭 영역 */
+    .baby-container {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 110px;
+      cursor: pointer;
+      z-index: 5;
+      transition: transform 0.1s ease;
+    }
+    .baby-container:hover {
+      transform: translateX(-50%) scale(1.06);
+    }
+    .baby-container:active {
+      transform: translateX(-50%) scale(0.95);
+    }
 
-        /* 3. 업그레이드 모달 슬롯 (사진 2 디자인 재현) */
-        .upgrade-modal {
-            position: absolute;
-            top: 42%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            width: 350px;
-            background: rgba(253, 250, 245, 0.95);
-            border: 3px solid #f6d57a;
-            border-radius: 24px;
-            padding: 18px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            z-index: 10;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.25s ease;
-        }
+    /* 2. 하단 UI 영역 */
+    .bottom-ui {
+      height: 110px;
+      background: #eef2f5;
+      border-top: 2px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      gap: 8px;
+    }
+    
+    .status-bar {
+      background: #22252a;
+      color: #ffffff;
+      padding: 6px 36px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      gap: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
 
-        .blur-active .upgrade-modal {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
+    .btn-group {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+      justify-content: center;
+    }
 
-        .modal-title {
-            font-size: 15px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 12px;
-            padding-left: 4px;
-        }
+    .ui-btn {
+      flex: 1;
+      max-width: 140px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #cbd5e1;
+      transition: all 0.1s ease;
+    }
+    .ui-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #cbd5e1;
+    }
 
-        .slot-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1.5px solid #e6d8b8;
-            border-radius: 16px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .slot-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .slot-icon { font-size: 24px; }
-        .slot-name { font-size: 14px; font-weight: bold; color: #222; }
-        .slot-level { font-size: 13px; color: #d97706; font-weight: bold; margin-top: 2px; }
-
-        .lvl-btn {
-            background: linear-gradient(180deg, #ffe885 0%, #f4bf37 100%);
-            border: 1px solid #d49b13;
-            border-radius: 10px;
-            padding: 7px 16px;
-            font-size: 13px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.05s ease;
-        }
-        .lvl-btn:active { transform: scale(0.95); }
-
-        /* 4. 하단 게임 메뉴 바 */
-        .bottom-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(245, 245, 247, 0.92);
-            backdrop-filter: blur(10px);
-            padding: 10px 14px 14px 14px;
-            z-index: 20;
-            border-top: 1px solid rgba(0,0,0,0.08);
-        }
-
-        .status-pill {
-            background: #232323;
-            color: #fff;
-            padding: 5px 20px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: bold;
-            width: fit-content;
-            margin: 0 auto 10px auto;
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-slots {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .nav-btn {
-            flex: 1;
-            background: #fff;
-            border: 1px solid #d8d8d8;
-            border-radius: 12px;
-            padding: 10px 0;
-            text-align: center;
-            font-size: 13px;
-            font-weight: bold;
-            color: #444;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-        }
-        .nav-btn.active {
-            border: 2px solid #eab308;
-            background: #fffdf5;
-            color: #b45309;
-        }
-    </style>
+    /* 3. 업그레이드 모달 창 */
+    .modal-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-card {
+      width: 340px;
+      background: #ffffff;
+      border: 3px solid #f59e0b;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1e293b;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #fef3c7;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .item-btn {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<div class="game-screen" id="gameScreen">
-    <!-- 배경 이미지 -->
-    <div class="bg-layer"></div>
+<div class="game-container">
+  <!-- 거실 메인 뷰포트 -->
+  <div class="viewport">
+    <div class="ceiling"></div>
+    <div class="fan"></div>
     
-    <!-- 아기 캐릭터 -->
-    <img src="https://i.ibb.co/1fW5g32/baby.png" class="baby-layer" alt="아기">
-
-    <!-- 업그레이드 모달 창 -->
-    <div class="upgrade-modal">
-        <div class="modal-title">나이: 1세</div>
-        
-        <div class="slot-card">
-            <div class="slot-left">
-                <span class="slot-icon">🖐️</span>
-                <div>
-                    <div class="slot-name">쓰다듬기</div>
-                    <div class="slot-level">레벨: <span id="lvl-stroke">0</span></div>
-                </div>
-            </div>
-            <button class="lvl-btn" onclick="upgrade('stroke')">레벨업 ✚</button>
-        </div>
-
-        <div class="slot-card">
-            <div class="slot-left">
-                <span class="slot-icon">🍼</span>
-                <div>
-                    <div class="slot-name">밥 먹이기</div>
-                    <div class="slot-level">레벨: <span id="lvl-feed">0</span></div>
-                </div>
-            </div>
-            <button class="lvl-btn" onclick="upgrade('feed')">레벨업 ✚</button>
-        </div>
-
-        <div class="slot-card">
-            <div class="slot-left">
-                <span class="slot-icon">🛈</span>
-                <div>
-                    <div class="slot-name">산책시키기</div>
-                    <div class="slot-level">레벨: <span id="lvl-walk">0</span></div>
-                </div>
-            </div>
-            <button class="lvl-btn" onclick="upgrade('walk')">레벨업 ✚</button>
-        </div>
+    <div class="window-frame">
+      <div class="window-pane"></div>
+      <div class="window-pane"></div>
     </div>
-
-    <!-- 하단 메뉴 -->
-    <div class="bottom-bar">
-        <div class="status-pill">
-            <span>나이: 1세</span>
-            <span>기분: 우는 중</span>
-        </div>
-        <div class="nav-slots">
-            <button class="nav-btn" id="upgradeBtn" onclick="toggleUpgrade()">⚙️ 업그레이드</button>
-            <button class="nav-btn">📈 성장</button>
-            <button class="nav-btn">❤️ 상태</button>
-            <button class="nav-btn">🖼️ 배경</button>
-            <button class="nav-btn">🔧 옵션</button>
-        </div>
+    
+    <div class="sofa">
+      <div class="sofa-cushion"></div>
     </div>
+    
+    <div class="tv-screen"></div>
+    <div class="table"></div>
+
+    <!-- 클릭 가능한 아기 SVG 캐릭터 -->
+    <div class="baby-container" onclick="strokeBaby()">
+      <svg viewBox="0 0 100 100" width="100%" height="100%">
+        <!-- 아기 몸통 (분홍 옷) -->
+        <path d="M 25 65 Q 20 90 35 90 L 65 90 Q 80 90 75 65 Z" fill="#f472b6" />
+        <!-- 아기 얼굴 -->
+        <circle cx="50" cy="45" r="28" fill="#ffedd5" />
+        <!-- 눈 (우는 눈) -->
+        <path d="M 38 42 Q 43 38 45 43" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M 62 42 Q 57 38 55 43" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- 입 -->
+        <circle cx="50" cy="56" r="6" fill="#e11d48" />
+        <!-- 눈물 -->
+        <path d="M 36 46 Q 34 52 36 55 Q 38 52 36 46" fill="#38bdf8" />
+        <path d="M 64 46 Q 62 52 64 55 Q 66 52 64 46" fill="#38bdf8" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- 하단 컨트롤 바 -->
+  <div class="bottom-ui">
+    <div class="status-bar">
+      <span id="age-txt">나이: 1세</span>
+      <span id="mood-txt">기분: 우는 중</span>
+    </div>
+    
+    <div class="btn-group">
+      <button class="ui-btn" onclick="toggleModal(true)">⚙️ 업그레이드</button>
+      <button class="ui-btn">📈 성장</button>
+      <button class="ui-btn">❤️ 상태</button>
+      <button class="ui-btn">🖼️ 배경</button>
+      <button class="ui-btn">🔧 옵션</button>
+    </div>
+  </div>
+
+  <!-- 업그레이드 모달 -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-card">
+      <div class="modal-title" id="modal-age">나이: 1세</div>
+      
+      <div class="item-row">
+        <div>🖐️ 쓰다듬기 <br><small id="lvl-stroke" style="color:#d97706;">레벨: 0</small></div>
+        <button class="item-btn" onclick="upLevel('stroke')">레벨업 ✚</button>
+      </div>
+      <div class="item-row">
+        <div>🍼 밥 먹이기 <br><small id="lvl-feed" style="color:#d97706;">레벨: 0</small></div>
+        <button class="item-btn" onclick="upLevel('feed')">레벨업 ✚</button>
+      </div>
+      <div class="item-row">
+        <div>🛈 산책시키기 <br><small id="lvl-walk" style="color:#d97706;">레벨: 0</small></div>
+        <button class="item-btn" onclick="upLevel('walk')">레벨업 ✚</button>
+      </div>
+
+      <button style="width:100%; margin-top:10px; padding:8px; border-radius:8px; border:1px solid #ccc; background:#f1f5f9; cursor:pointer;" onclick="toggleModal(false)">닫기</button>
+    </div>
+  </div>
 </div>
 
 <script>
-    const levels = { stroke: 0, feed: 0, walk: 0 };
+  let strokeLvl = 0;
+  let feedLvl = 0;
+  let walkLvl = 0;
 
-    function toggleUpgrade() {
-        const screen = document.getElementById('gameScreen');
-        const btn = document.getElementById('upgradeBtn');
-        screen.classList.toggle('blur-active');
-        btn.classList.toggle('active');
-    }
+  function strokeBaby() {
+    strokeLvl++;
+    document.getElementById('lvl-stroke').innerText = `레벨: ${strokeLvl}`;
+    document.getElementById('mood-txt').innerText = "기분: 기쁨 😊";
+    setTimeout(() => {
+      document.getElementById('mood-txt').innerText = "기분: 우는 중";
+    }, 2000);
+  }
 
-    function upgrade(type) {
-        levels[type]++;
-        document.getElementById(`lvl-${type}`).innerText = levels[type];
-    }
+  function upLevel(type) {
+    if(type === 'stroke') { strokeLvl++; document.getElementById('lvl-stroke').innerText = `레벨: ${strokeLvl}`; }
+    if(type === 'feed') { feedLvl++; document.getElementById('lvl-feed').innerText = `레벨: ${feedLvl}`; }
+    if(type === 'walk') { walkLvl++; document.getElementById('lvl-walk').innerText = `레벨: ${walkLvl}`; }
+  }
+
+  function toggleModal(show) {
+    document.getElementById('modal').style.display = show ? 'flex' : 'none';
+  }
 </script>
 
 </body>

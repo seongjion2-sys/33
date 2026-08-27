@@ -12,7 +12,7 @@
       user-select: none;
     }
     body {
-      background-color: #0d1117;
+      background-color: #0f172a;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -24,207 +24,114 @@
       width: 100%;
       max-width: 850px;
       height: 560px;
-      background: #fdfbf7;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
     }
-    
-    /* 1. 거실 배경 SVG 스타일 영역 */
+
+    /* 실사 배경 이미지 설정 */
     .viewport {
       position: relative;
       flex: 1;
       width: 100%;
-      background: linear-gradient(to bottom, #f7f1e5 0%, #e6ded0 100%);
-      overflow: hidden;
+      background-image: url('https://i.ibb.co/L8G2ZqM/room-baby.jpg'); /* 대체 원본 URL 경로 */
+      background-size: cover;
+      background-position: center;
     }
-    
-    /* 천장 & 천장등 */
-    .ceiling {
+
+    /* 클릭 가능한 아기 영역 (투명 클릭 상자) */
+    .baby-click-area {
       position: absolute;
-      top: 0;
-      width: 100%;
-      height: 60px;
-      background: #fff;
-      box-shadow: 0 4px 15px rgba(255, 230, 180, 0.6);
-    }
-    .fan {
-      position: absolute;
-      top: 15px;
-      left: 50%;
+      bottom: 85px;
+      left: 49%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 20px;
-      background: #e2dcd2;
-      border-radius: 10px;
-    }
-
-    /* 창문 영역 */
-    .window-frame {
-      position: absolute;
-      top: 60px;
-      left: 28%;
-      width: 44%;
-      height: 280px;
-      background: #cbe3f0;
-      border: 8px solid #ffffff;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
-      display: flex;
-    }
-    .window-pane {
-      flex: 1;
-      border-right: 3px solid #ffffff;
-    }
-    .window-pane:last-child { border-right: none; }
-    
-    /* 소파 (좌측) */
-    .sofa {
-      position: absolute;
-      left: -20px;
-      bottom: 60px;
-      width: 280px;
-      height: 200px;
-      background: #eae2d6;
-      border-radius: 20px;
-      box-shadow: 5px 5px 15px rgba(0,0,0,0.08);
-    }
-    .sofa-cushion {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 60px;
-      height: 70px;
-      background: #ded5c5;
-      border-radius: 10px;
-    }
-
-    /* TV (우측) */
-    .tv-screen {
-      position: absolute;
-      right: 15px;
-      top: 80px;
-      width: 200px;
-      height: 260px;
-      background: #1a1a24;
-      border: 6px solid #2d2d38;
-      border-radius: 8px;
-      box-shadow: -5px 5px 15px rgba(0,0,0,0.15);
-    }
-
-    /* 거실 테이블 */
-    .table {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      height: 60px;
-      background: #2b3a4a;
-      border-radius: 6px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-
-    /* 아기 캐릭터 클릭 영역 */
-    .baby-container {
-      position: absolute;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       cursor: pointer;
+      border-radius: 50%;
       z-index: 5;
-      transition: transform 0.1s ease;
-    }
-    .baby-container:hover {
-      transform: translateX(-50%) scale(1.06);
-    }
-    .baby-container:active {
-      transform: translateX(-50%) scale(0.95);
     }
 
-    /* 2. 하단 UI 영역 */
+    /* 하단 UI 바 */
     .bottom-ui {
-      height: 110px;
-      background: #eef2f5;
-      border-top: 2px solid #e2e8f0;
+      height: 100px;
+      background: rgba(241, 245, 249, 0.95);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid #cbd5e1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 8px 16px;
-      gap: 8px;
+      padding: 6px 16px;
+      gap: 6px;
     }
-    
+
     .status-bar {
-      background: #22252a;
+      background: #1e293b;
       color: #ffffff;
-      padding: 6px 36px;
+      padding: 5px 32px;
       border-radius: 20px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       display: flex;
-      gap: 30px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      gap: 24px;
     }
 
     .btn-group {
       display: flex;
       width: 100%;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
     }
 
     .ui-btn {
       flex: 1;
-      max-width: 140px;
+      max-width: 130px;
       background: #ffffff;
-      border: 1.5px solid #cbd5e1;
+      border: 1px solid #94a3b8;
       border-radius: 12px;
-      padding: 8px 0;
+      padding: 7px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
       font-size: 13px;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
-      box-shadow: 0 3px 0 #cbd5e1;
-      transition: all 0.1s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     }
     .ui-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 1px 0 #cbd5e1;
+      transform: translateY(1px);
     }
 
-    /* 3. 업그레이드 모달 창 */
+    /* 모달 레이어 */
     .modal-overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
+      backdrop-filter: blur(3px);
       z-index: 10;
       display: none;
       justify-content: center;
       align-items: center;
     }
     .modal-card {
-      width: 340px;
+      width: 320px;
       background: #ffffff;
       border: 3px solid #f59e0b;
       border-radius: 16px;
       padding: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
     .modal-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
-      color: #1e293b;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
+      color: #0f172a;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
       border-bottom: 2px solid #fef3c7;
     }
     .item-row {
@@ -233,15 +140,16 @@
       align-items: center;
       background: #f8fafc;
       padding: 8px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
+      border-radius: 8px;
+      margin-bottom: 6px;
       border: 1px solid #e2e8f0;
+      font-size: 13px;
     }
     .item-btn {
       background: #f59e0b;
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
@@ -251,46 +159,13 @@
 <body>
 
 <div class="game-container">
-  <!-- 거실 메인 뷰포트 -->
   <div class="viewport">
-    <div class="ceiling"></div>
-    <div class="fan"></div>
-    
-    <div class="window-frame">
-      <div class="window-pane"></div>
-      <div class="window-pane"></div>
-    </div>
-    
-    <div class="sofa">
-      <div class="sofa-cushion"></div>
-    </div>
-    
-    <div class="tv-screen"></div>
-    <div class="table"></div>
-
-    <!-- 클릭 가능한 아기 SVG 캐릭터 -->
-    <div class="baby-container" onclick="strokeBaby()">
-      <svg viewBox="0 0 100 100" width="100%" height="100%">
-        <!-- 아기 몸통 (분홍 옷) -->
-        <path d="M 25 65 Q 20 90 35 90 L 65 90 Q 80 90 75 65 Z" fill="#f472b6" />
-        <!-- 아기 얼굴 -->
-        <circle cx="50" cy="45" r="28" fill="#ffedd5" />
-        <!-- 눈 (우는 눈) -->
-        <path d="M 38 42 Q 43 38 45 43" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M 62 42 Q 57 38 55 43" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <!-- 입 -->
-        <circle cx="50" cy="56" r="6" fill="#e11d48" />
-        <!-- 눈물 -->
-        <path d="M 36 46 Q 34 52 36 55 Q 38 52 36 46" fill="#38bdf8" />
-        <path d="M 64 46 Q 62 52 64 55 Q 66 52 64 46" fill="#38bdf8" />
-      </svg>
-    </div>
+    <div class="baby-click-area" onclick="strokeBaby()" title="아기 클릭"></div>
   </div>
 
-  <!-- 하단 컨트롤 바 -->
   <div class="bottom-ui">
     <div class="status-bar">
-      <span id="age-txt">나이: 1세</span>
+      <span>나이: 1세</span>
       <span id="mood-txt">기분: 우는 중</span>
     </div>
     
@@ -303,10 +178,9 @@
     </div>
   </div>
 
-  <!-- 업그레이드 모달 -->
   <div class="modal-overlay" id="modal">
     <div class="modal-card">
-      <div class="modal-title" id="modal-age">나이: 1세</div>
+      <div class="modal-title">나이: 1세</div>
       
       <div class="item-row">
         <div>🖐️ 쓰다듬기 <br><small id="lvl-stroke" style="color:#d97706;">레벨: 0</small></div>
@@ -321,7 +195,7 @@
         <button class="item-btn" onclick="upLevel('walk')">레벨업 ✚</button>
       </div>
 
-      <button style="width:100%; margin-top:10px; padding:8px; border-radius:8px; border:1px solid #ccc; background:#f1f5f9; cursor:pointer;" onclick="toggleModal(false)">닫기</button>
+      <button style="width:100%; margin-top:8px; padding:6px; border-radius:6px; border:1px solid #ccc; background:#f1f5f9; cursor:pointer;" onclick="toggleModal(false)">닫기</button>
     </div>
   </div>
 </div>

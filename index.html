@@ -1,4 +1,20 @@
-<!DOCTYPE html>
+import base64
+import glob
+
+files = glob.glob('*.png') + glob.glob('*.jpg') + glob.glob('*.jpeg')
+print("Found files:", files)
+
+img_path = files[0] if files else None
+
+if img_path:
+    with open(img_path, 'rb') as f:
+        img_data = f.read()
+    b64_str = base64.b64encode(img_data).decode('utf-8')
+    data_url = f"data:image/png;base64,{b64_str}"
+else:
+    data_url = ""
+
+html_template = """<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -31,12 +47,12 @@
       flex-direction: column;
     }
 
-    /* 이미지 파일 연결 (파일명 수정 반영) */
+    /* Base64 내장 배경 이미지 */
     .viewport {
       position: relative;
       flex: 1;
       width: 100%;
-      background-image: url('./background.png'), url('./Gemini_Generated_Image_won3qtwon3qtwon3%20(1).png');
+      background-image: url('__DATA_URL__');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -228,3 +244,11 @@
 
 </body>
 </html>
+"""
+
+final_html = html_template.replace('__DATA_URL__', data_url)
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(final_html)
+
+print("Generated index.html with size:", len(final_html))
